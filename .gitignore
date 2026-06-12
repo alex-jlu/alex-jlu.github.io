@@ -1,0 +1,28 @@
+# Build output
+dist/
+.output/
+
+# Dependencies
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Astro generated types
+.astro/
+
+# Portfolio: IP safeguards — never commit unapproved or draft work assets
+**/draft-assets/
+**/*-UNAPPROVED.*
+**/*-DRAFT.*
+*.mp4.tmp

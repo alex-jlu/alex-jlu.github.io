@@ -1,0 +1,96 @@
+---
+interface MediaItem {
+  type: 'image' | 'video';
+  src: string;
+  alt?: string;
+  caption?: string;
+  poster?: string;
+}
+
+interface Props {
+  items: MediaItem[];
+}
+
+const { items } = Astro.props;
+---
+
+{items.length > 0 && (
+  <section class="gallery" aria-label="Project media gallery">
+    <h2 class="gallery__heading">Media</h2>
+    <div class="gallery__grid">
+      {items.map(item => (
+        <figure class="gallery__item">
+          {item.type === 'image' ? (
+            <img
+              src={item.src}
+              alt={item.alt ?? ''}
+              class="gallery__media"
+              loading="lazy"
+              decoding="async"
+            />
+          ) : (
+            <video
+              src={item.src}
+              poster={item.poster}
+              class="gallery__media gallery__media--video"
+              controls
+              preload="metadata"
+              playsinline
+            >
+              Your browser does not support the video element.
+            </video>
+          )}
+          {item.caption && (
+            <figcaption class="gallery__caption">{item.caption}</figcaption>
+          )}
+        </figure>
+      ))}
+    </div>
+  </section>
+)}
+
+<style>
+  .gallery {
+    margin-top: var(--space-16);
+  }
+
+  .gallery__heading {
+    font-size: var(--text-lg);
+    font-weight: var(--weight-semibold);
+    margin-bottom: var(--space-6);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .gallery__grid {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .gallery__item {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--color-bg-subtle);
+  }
+
+  .gallery__media {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .gallery__media--video {
+    aspect-ratio: 16 / 9;
+    object-fit: contain;
+    background: #000;
+  }
+
+  .gallery__caption {
+    padding: var(--space-3) var(--space-5);
+    font-size: var(--text-sm);
+    color: var(--color-text-2);
+    border-top: 1px solid var(--color-border);
+    line-height: var(--leading-normal);
+  }
+</style>

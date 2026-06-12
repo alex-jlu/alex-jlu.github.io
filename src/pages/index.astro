@@ -1,0 +1,185 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CaseCard from '../components/CaseCard.astro';
+
+const featuredCases = (
+  await getCollection('cases', ({ data }) => data.publish && data.featured)
+).sort((a, b) => b.data.year - a.data.year);
+---
+
+<BaseLayout title="Alexander Ludwig">
+
+  <!-- ── Hero ──────────────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="container container--narrow">
+      <p class="hero__eyebrow">Design Engineer</p>
+      <h1 class="hero__heading">
+        Building products at the intersection of design&nbsp;and&nbsp;code.
+      </h1>
+      <p class="hero__bio">
+        I'm Alexander Ludwig — a design engineer with experience across product design,
+        component systems, and front-end development. I help teams turn design intent
+        into polished, maintainable interfaces.
+      </p>
+      <div class="hero__actions">
+        <a href="/work" class="btn btn--primary">View my work</a>
+        <a href="/about" class="btn btn--secondary">About me</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Selected work ─────────────────────────────────────────────── -->
+  {featuredCases.length > 0 && (
+    <section class="work-section" aria-labelledby="work-heading">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title" id="work-heading">Selected work</h2>
+          <a href="/work" class="section-cta">
+            View all
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+        <div class="cases-grid">
+          {featuredCases.map(entry => (
+            <CaseCard
+              slug={entry.slug}
+              title={entry.data.title}
+              company={entry.data.company}
+              role={entry.data.role}
+              year={entry.data.year}
+              tags={entry.data.tags}
+              summary={entry.data.summary}
+              heroImage={entry.data.heroImage}
+              featured={entry.data.featured}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- ── About teaser ──────────────────────────────────────────────── -->
+  <section class="about-teaser" aria-labelledby="about-heading">
+    <div class="container container--narrow">
+      <h2 class="section-title" id="about-heading">About me</h2>
+      <p class="about-teaser__text">
+        With several years of experience in cross-functional teams, I specialise in design
+        engineering — the craft of making high-quality interfaces that stay true to the design
+        intent while being technically sound and easy to maintain. I'm comfortable working across
+        the full stack: from wireframes and prototyping to component libraries and production code.
+      </p>
+      <a href="/about" class="btn btn--secondary">Read more</a>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  /* Hero */
+  .hero {
+    padding-top: var(--space-24);
+    padding-bottom: var(--space-24);
+  }
+
+  .hero__eyebrow {
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: var(--space-5);
+  }
+
+  .hero__heading {
+    font-size: clamp(var(--text-3xl), 6vw, var(--text-6xl));
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-tight);
+    line-height: var(--leading-tight);
+    color: var(--color-text-1);
+    max-width: 18ch;
+    margin-bottom: var(--space-6);
+  }
+
+  .hero__bio {
+    font-size: var(--text-lg);
+    color: var(--color-text-2);
+    line-height: var(--leading-loose);
+    max-width: 56ch;
+    margin-bottom: var(--space-8);
+  }
+
+  .hero__actions {
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+
+  /* Work section */
+  .work-section {
+    padding-block: var(--space-20);
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-bottom: var(--space-8);
+  }
+
+  .section-title {
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-text-1);
+  }
+
+  .section-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    color: var(--color-accent);
+    transition: gap var(--transition-base);
+  }
+
+  .section-cta:hover {
+    gap: var(--space-3);
+  }
+
+  .cases-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--space-6);
+  }
+
+  @media (max-width: 400px) {
+    .cases-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* About teaser */
+  .about-teaser {
+    padding-block: var(--space-20);
+    background: var(--color-bg-card);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .about-teaser .section-title {
+    margin-bottom: var(--space-5);
+  }
+
+  .about-teaser__text {
+    font-size: var(--text-base);
+    color: var(--color-text-2);
+    line-height: var(--leading-loose);
+    max-width: 65ch;
+    margin-bottom: var(--space-8);
+  }
+</style>

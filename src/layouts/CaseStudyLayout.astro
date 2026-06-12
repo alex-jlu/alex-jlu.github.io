@@ -1,0 +1,286 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import TagList from '../components/TagList.astro';
+import MediaGallery from '../components/MediaGallery.astro';
+
+interface MediaItem {
+  type: 'image' | 'video';
+  src: string;
+  alt?: string;
+  caption?: string;
+  poster?: string;
+}
+
+interface Props {
+  frontmatter: {
+    title: string;
+    summary: string;
+    role: string;
+    year: number;
+    company?: string;
+    tags: string[];
+    heroImage?: string;
+    outcomes: string[];
+    media: MediaItem[];
+    visibility?: string;
+  };
+}
+
+const { frontmatter } = Astro.props;
+const {
+  title,
+  summary,
+  role,
+  year,
+  company,
+  tags,
+  heroImage,
+  outcomes,
+  media,
+  visibility,
+} = frontmatter;
+---
+
+<BaseLayout title={title} description={summary} ogImage={heroImage}>
+  <article class="case-study">
+
+    {heroImage && (
+      <div class="case-hero">
+        <img
+          src={heroImage}
+          alt={`${title} — hero image`}
+          class="case-hero__image"
+          width="1200"
+          height="675"
+          loading="eager"
+          decoding="async"
+        />
+      </div>
+    )}
+
+    <div class="container container--narrow case-study__body">
+
+      <header class="case-study__header">
+        {visibility === 'nda-safe' && (
+          <p class="nda-notice" role="note">
+            NDA-safe — details have been generalised to protect confidentiality.
+          </p>
+        )}
+
+        <TagList tags={tags} />
+
+        <h1 class="case-study__title">{title}</h1>
+        <p class="case-study__summary">{summary}</p>
+
+        <dl class="case-study__meta">
+          <div class="meta-item">
+            <dt>Role</dt>
+            <dd>{role}</dd>
+          </div>
+          {company && (
+            <div class="meta-item">
+              <dt>Company</dt>
+              <dd>{company}</dd>
+            </div>
+          )}
+          <div class="meta-item">
+            <dt>Year</dt>
+            <dd>{year}</dd>
+          </div>
+        </dl>
+      </header>
+
+      <hr class="case-divider" />
+
+      <div class="prose">
+        <slot />
+      </div>
+
+      {outcomes.length > 0 && (
+        <section class="outcomes" aria-labelledby="outcomes-title">
+          <h2 class="outcomes__title" id="outcomes-title">Outcomes</h2>
+          <ul class="outcomes__list" role="list">
+            {outcomes.map(outcome => (
+              <li class="outcomes__item">
+                <span class="outcomes__arrow" aria-hidden="true">→</span>
+                <span>{outcome}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      <MediaGallery items={media} />
+
+    </div>
+
+    <div class="container case-study__back">
+      <a href="/work" class="back-link">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path
+            d="M10 3L5 8L10 13"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        All work
+      </a>
+    </div>
+
+  </article>
+</BaseLayout>
+
+<style>
+  /* Hero image */
+  .case-hero {
+    width: 100%;
+    max-height: 580px;
+    overflow: hidden;
+    background: var(--color-bg-subtle);
+  }
+
+  .case-hero__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Body */
+  .case-study__body {
+    padding-block: var(--space-16);
+  }
+
+  /* Header */
+  .case-study__header {
+    margin-bottom: var(--space-12);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  .nda-notice {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-wide);
+    color: var(--color-text-2);
+    background: var(--color-bg-subtle);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    padding: var(--space-2) var(--space-4);
+    align-self: flex-start;
+  }
+
+  .case-study__title {
+    font-size: clamp(var(--text-3xl), 5vw, var(--text-5xl));
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-tight);
+    line-height: var(--leading-tight);
+    color: var(--color-text-1);
+  }
+
+  .case-study__summary {
+    font-size: var(--text-lg);
+    color: var(--color-text-2);
+    line-height: var(--leading-normal);
+    max-width: 60ch;
+  }
+
+  /* Meta */
+  .case-study__meta {
+    display: flex;
+    gap: var(--space-8);
+    flex-wrap: wrap;
+  }
+
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .meta-item dt {
+    font-size: var(--text-xs);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--color-text-3);
+  }
+
+  .meta-item dd {
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    color: var(--color-text-1);
+  }
+
+  /* Divider */
+  .case-divider {
+    border: none;
+    border-top: 1px solid var(--color-border);
+    margin-bottom: var(--space-12);
+  }
+
+  /* Outcomes */
+  .outcomes {
+    margin-top: var(--space-16);
+    padding: var(--space-8);
+    background: var(--color-bg-subtle);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+  }
+
+  .outcomes__title {
+    font-size: var(--text-lg);
+    font-weight: var(--weight-semibold);
+    color: var(--color-text-1);
+    margin-bottom: var(--space-5);
+  }
+
+  .outcomes__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .outcomes__item {
+    display: flex;
+    gap: var(--space-3);
+    font-size: var(--text-sm);
+    line-height: var(--leading-normal);
+    color: var(--color-text-2);
+  }
+
+  .outcomes__arrow {
+    color: var(--color-accent);
+    font-weight: var(--weight-semibold);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* Back link */
+  .case-study__back {
+    padding-bottom: var(--space-16);
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    color: var(--color-text-2);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-base);
+    margin-left: calc(var(--space-3) * -1);
+  }
+
+  .back-link:hover {
+    color: var(--color-text-1);
+    background: var(--color-bg-subtle);
+  }
+</style>

@@ -1,0 +1,275 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// ── Update these with your real details ──────────────────────────────
+const experience = [
+  {
+    from: '2022',
+    to: 'Present',
+    role: 'Design Engineer',
+    company: 'Your current company',
+    description: 'Brief description of your role and impact.',
+  },
+  {
+    from: '2020',
+    to: '2022',
+    role: 'UX / Product Designer',
+    company: 'Previous company',
+    description: 'Brief description of your role and impact.',
+  },
+];
+
+const skills: Record<string, string[]> = {
+  Design: [
+    'Figma',
+    'Prototyping',
+    'Design Systems',
+    'User Research',
+    'Information Architecture',
+    'Interaction Design',
+  ],
+  Engineering: [
+    'React',
+    'TypeScript',
+    'CSS / Sass',
+    'Astro',
+    'Next.js',
+    'Storybook',
+  ],
+  Methods: [
+    'Agile / Scrum',
+    'Design Sprints',
+    'Component-driven Development',
+    'Accessibility (WCAG)',
+    'Cross-functional Collaboration',
+  ],
+};
+---
+
+<BaseLayout
+  title="About"
+  description="About Alexander Ludwig — Design Engineer bridging design and front-end engineering."
+>
+  <!-- ── Bio ─────────────────────────────────────────────────────────── -->
+  <section class="about-hero">
+    <div class="container container--narrow">
+      <h1 class="page-title">About</h1>
+      <p class="lead">
+        I'm a design engineer with a background in both product design and front-end
+        development. I care about the craft of building interfaces — not just how they
+        look, but how they work, how they're built, and how they scale.
+      </p>
+      <p class="body-text">
+        Over the past several years I've worked with teams of varying sizes across
+        different industries. Whether I'm running a design sprint, building a component
+        library, or fine-tuning an interaction, I bring the same attention to detail
+        and care for the end user.
+      </p>
+      <p class="body-text">
+        {/* ← Replace this line with something personal */}
+        Outside of work I'm interested in [your personal interests here].
+      </p>
+    </div>
+  </section>
+
+  <!-- ── Experience ──────────────────────────────────────────────────── -->
+  <section class="experience" aria-labelledby="exp-heading">
+    <div class="container container--narrow">
+      <h2 class="section-title" id="exp-heading">Experience</h2>
+      <ol class="timeline" role="list">
+        {experience.map(item => (
+          <li class="timeline__item">
+            <div class="timeline__period">
+              <span>{item.from}</span>
+              <span class="timeline__dash">–</span>
+              <span>{item.to}</span>
+            </div>
+            <div class="timeline__content">
+              <p class="timeline__role">{item.role}</p>
+              <p class="timeline__company">{item.company}</p>
+              {item.description && (
+                <p class="timeline__desc">{item.description}</p>
+              )}
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- ── Skills ──────────────────────────────────────────────────────── -->
+  <section class="skills" aria-labelledby="skills-heading">
+    <div class="container container--narrow">
+      <h2 class="section-title" id="skills-heading">Skills &amp; tools</h2>
+      <dl class="skills-list">
+        {Object.entries(skills).map(([category, items]) => (
+          <div class="skills-group">
+            <dt class="skills-group__label">{category}</dt>
+            <dd class="skills-group__chips">
+              {items.map(skill => (
+                <span class="chip">{skill}</span>
+              ))}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .about-hero {
+    padding-top: var(--space-20);
+    padding-bottom: var(--space-12);
+  }
+
+  .page-title {
+    font-size: clamp(var(--text-4xl), 8vw, var(--text-7xl));
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-tight);
+    line-height: var(--leading-tight);
+    color: var(--color-text-1);
+    margin-bottom: var(--space-8);
+  }
+
+  .lead {
+    font-size: var(--text-xl);
+    color: var(--color-text-1);
+    line-height: var(--leading-loose);
+    margin-bottom: var(--space-5);
+    max-width: 60ch;
+  }
+
+  .body-text {
+    font-size: var(--text-base);
+    color: var(--color-text-2);
+    line-height: var(--leading-loose);
+    max-width: 65ch;
+    margin-bottom: var(--space-4);
+  }
+
+  /* Section label */
+  .section-title {
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-text-1);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: var(--space-8);
+  }
+
+  /* Experience section */
+  .experience {
+    padding-block: var(--space-12);
+  }
+
+  .timeline {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .timeline__item {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: var(--space-6);
+    padding-block: var(--space-6);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .timeline__item:last-child {
+    border-bottom: none;
+  }
+
+  .timeline__period {
+    display: flex;
+    align-items: flex-start;
+    gap: 4px;
+    padding-top: 2px;
+    font-size: var(--text-sm);
+    color: var(--color-text-3);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .timeline__dash {
+    color: var(--color-border-strong);
+  }
+
+  .timeline__role {
+    font-size: var(--text-base);
+    font-weight: var(--weight-semibold);
+    color: var(--color-text-1);
+    margin-bottom: var(--space-1);
+  }
+
+  .timeline__company {
+    font-size: var(--text-sm);
+    color: var(--color-text-2);
+    margin-bottom: var(--space-2);
+  }
+
+  .timeline__desc {
+    font-size: var(--text-sm);
+    color: var(--color-text-2);
+    line-height: var(--leading-normal);
+  }
+
+  @media (max-width: 480px) {
+    .timeline__item {
+      grid-template-columns: 1fr;
+      gap: var(--space-2);
+    }
+  }
+
+  /* Skills section */
+  .skills {
+    padding-block: var(--space-12);
+    padding-bottom: var(--space-24);
+  }
+
+  .skills-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .skills-group {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: var(--space-4);
+    align-items: start;
+  }
+
+  .skills-group__label {
+    font-size: var(--text-xs);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--color-text-3);
+    padding-top: var(--space-2);
+  }
+
+  .skills-group__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .chip {
+    display: inline-block;
+    padding: var(--space-2) var(--space-3);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    color: var(--color-text-1);
+  }
+
+  @media (max-width: 480px) {
+    .skills-group {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
