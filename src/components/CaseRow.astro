@@ -1,0 +1,148 @@
+---
+interface Props {
+  slug: string;
+  title: string;
+  summary: string;
+  tags: string[];
+  heroImage?: string;
+  /** 0-based index within the category — determines image left vs right */
+  index: number;
+}
+
+const { slug, title, summary, tags, heroImage, index } = Astro.props;
+const reversed = index % 2 !== 0;
+---
+
+<a href={`/work/${slug}`} class:list={['case-row', { 'case-row--reversed': reversed }]}>
+  <div class="case-row__image">
+    {heroImage ? (
+      <img
+        src={heroImage}
+        alt={`${title} preview`}
+        loading="lazy"
+        decoding="async"
+      />
+    ) : (
+      <div class="case-row__placeholder" aria-hidden="true"></div>
+    )}
+  </div>
+
+  <div class="case-row__content">
+    <h3 class="case-row__title">{title}</h3>
+    <p class="case-row__summary">{summary}</p>
+    {tags.length > 0 && (
+      <ul class="case-row__tags" role="list">
+        {tags.map(tag => (
+          <li class="case-row__tag">{tag}</li>
+        ))}
+      </ul>
+    )}
+  </div>
+</a>
+
+<style>
+  .case-row {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: var(--space-10);
+    align-items: start;
+    padding-block: var(--space-8);
+    border-bottom: 1px solid var(--color-border);
+    transition: opacity var(--transition-base);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .case-row:last-child {
+    border-bottom: none;
+  }
+
+  .case-row:hover {
+    opacity: 0.75;
+  }
+
+  .case-row--reversed {
+    grid-template-columns: 1fr 280px;
+  }
+
+  .case-row--reversed .case-row__image {
+    order: 2;
+  }
+
+  .case-row--reversed .case-row__content {
+    order: 1;
+  }
+
+  /* Image */
+  .case-row__image {
+    aspect-ratio: 4 / 3;
+    background: var(--color-bg-subtle);
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .case-row__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .case-row__placeholder {
+    width: 100%;
+    height: 100%;
+    background: var(--color-bg-subtle);
+  }
+
+  /* Content */
+  .case-row__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding-top: var(--space-2);
+  }
+
+  .case-row__title {
+    font-size: var(--text-xl);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-tight);
+    line-height: var(--leading-snug);
+    color: var(--color-text-1);
+  }
+
+  .case-row__summary {
+    font-size: var(--text-sm);
+    color: var(--color-text-2);
+    line-height: var(--leading-normal);
+    max-width: 52ch;
+  }
+
+  .case-row__tags {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    margin-top: var(--space-1);
+  }
+
+  .case-row__tag {
+    font-size: var(--text-xs);
+    color: var(--color-text-3);
+    line-height: var(--leading-normal);
+  }
+
+  @media (max-width: 680px) {
+    .case-row,
+    .case-row--reversed {
+      grid-template-columns: 1fr;
+      gap: var(--space-5);
+    }
+
+    .case-row--reversed .case-row__image {
+      order: 0;
+    }
+
+    .case-row--reversed .case-row__content {
+      order: 0;
+    }
+  }
+</style>

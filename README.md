@@ -25,6 +25,11 @@ See **[docs/CONTENT_GUIDE.md](docs/CONTENT_GUIDE.md)** for:
 - Media guidelines (images, video, GIFs)
 - NDA-safe rules
 
+See **[docs/LEGAL_PORTFOLIO_GUIDE.md](docs/LEGAL_PORTFOLIO_GUIDE.md)** for:
+- Legal considerations by employer type (Bosch, agency, startup)
+- Bosch contract clause reference and portfolio effects
+- Traffic-light summary and pre-publish checklist
+
 Short version: create `src/content/cases/your-slug.md`, fill in frontmatter, pass the IP checklist, set `publish: true`, and push.
 
 ## Updating personal info

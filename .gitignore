@@ -26,3 +26,9 @@ Thumbs.db
 **/*-UNAPPROVED.*
 **/*-DRAFT.*
 *.mp4.tmp
+
+# Personal reference docs (kept local only)
+docs/
+
+# Figma wireframes (design source files, not for public repo)
+wireframes/

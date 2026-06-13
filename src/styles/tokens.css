@@ -1,32 +1,31 @@
 /* ─── Design Tokens ────────────────────────────────────────────────────────────
    All visual values live here as CSS custom properties.
-   To adapt the site to your Figma design system, update these values only —
-   no component styles should need to change.
+   To restyle the entire site, update values in this file only.
 ────────────────────────────────────────────────────────────────────────────── */
 
 :root {
   /* ── Colours ──────────────────────────────────────────────────────── */
-  --color-bg:            #f8f7f4;
-  --color-bg-card:       #ffffff;
-  --color-bg-subtle:     #f0efe9;
-  --color-bg-hover:      #eae9e2;
+  --color-bg:            #ffffff;
+  --color-bg-card:       #f9f9f9;
+  --color-bg-subtle:     #f4f4f4;
+  --color-bg-hover:      #eeeeee;
 
-  --color-text-1:        #111110;   /* headings, primary body */
-  --color-text-2:        #6f6e6b;   /* secondary labels, meta */
-  --color-text-3:        #a8a7a3;   /* placeholders, disabled, timestamps */
+  --color-text-1:        #111111;   /* headings, primary body */
+  --color-text-2:        #555555;   /* secondary labels, meta */
+  --color-text-3:        #999999;   /* placeholders, disabled, timestamps */
 
-  --color-accent:        #1d4ed8;   /* primary interactive colour — swap this from Figma */
-  --color-accent-hover:  #1e40af;
-  --color-accent-bg:     #eff6ff;
+  --color-accent:        #E84535;   /* warm red — from Figma */
+  --color-accent-hover:  #C93A2A;
+  --color-accent-bg:     #fdf2f1;
 
-  --color-border:        #e7e6e2;
-  --color-border-strong: #cac9c4;
+  --color-border:        #e8e8e8;
+  --color-border-strong: #cccccc;
 
   /* ── Typography ───────────────────────────────────────────────────── */
   --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
-  /* Type scale (major third, 1.25 ratio) */
+  /* Type scale */
   --text-xs:   0.75rem;    /*  12px */
   --text-sm:   0.875rem;   /*  14px */
   --text-base: 1rem;       /*  16px */
@@ -40,10 +39,10 @@
   --text-7xl:  4.5rem;     /*  72px */
 
   /* Line height */
-  --leading-tight:  1.2;
-  --leading-snug:   1.35;
+  --leading-tight:  1.15;
+  --leading-snug:   1.3;
   --leading-normal: 1.6;
-  --leading-loose:  1.8;
+  --leading-loose:  1.75;
 
   /* Letter spacing */
   --tracking-tight:  -0.02em;
@@ -73,23 +72,23 @@
 
   /* ── Layout ───────────────────────────────────────────────────────── */
   --max-w-content: 760px;
-  --max-w-wide:    1240px;
-  --nav-height:    60px;
-  --page-px:       var(--space-6);   /* horizontal page padding */
+  --max-w-wide:    1200px;
+  --nav-height:    56px;
+  --page-px:       var(--space-6);
 
   /* ── Border radius ────────────────────────────────────────────────── */
-  --radius-sm:   4px;
-  --radius-md:   8px;
-  --radius-lg:   12px;
-  --radius-xl:   16px;
-  --radius-2xl:  24px;
+  --radius-sm:   3px;
+  --radius-md:   6px;
+  --radius-lg:   10px;
+  --radius-xl:   14px;
+  --radius-2xl:  20px;
   --radius-full: 9999px;
 
   /* ── Shadows ──────────────────────────────────────────────────────── */
   --shadow-sm:  0 1px 2px  rgba(0, 0, 0, 0.05);
   --shadow-md:  0 4px 12px rgba(0, 0, 0, 0.07);
-  --shadow-lg:  0 8px 24px rgba(0, 0, 0, 0.10);
-  --shadow-xl:  0 16px 48px rgba(0, 0, 0, 0.12);
+  --shadow-lg:  0 8px 24px rgba(0, 0, 0, 0.09);
+  --shadow-xl:  0 16px 48px rgba(0, 0, 0, 0.11);
 
   /* ── Motion ───────────────────────────────────────────────────────── */
   --ease-default: cubic-bezier(0.4, 0, 0.2, 1);

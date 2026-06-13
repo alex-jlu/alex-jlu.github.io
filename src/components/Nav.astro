@@ -10,7 +10,7 @@ const isActive = (href: string) => {
 <header class="nav-wrapper">
   <nav class="nav container" aria-label="Main navigation">
     <a href="/" class="nav__logo" aria-label="Alexander Ludwig — back to home">
-      Alexander Ludwig
+      Alexander Ludwig <span class="nav__logo-sep" aria-hidden="true">·</span> Design Engineer
     </a>
 
     <button
@@ -26,14 +26,6 @@ const isActive = (href: string) => {
     <ul class="nav__links" id="nav-links" role="list">
       <li>
         <a
-          href="/work"
-          class:list={['nav__link', { 'nav__link--active': isActive('/work') }]}
-        >
-          Work
-        </a>
-      </li>
-      <li>
-        <a
           href="/about"
           class:list={['nav__link', { 'nav__link--active': isActive('/about') }]}
         >
@@ -41,8 +33,24 @@ const isActive = (href: string) => {
         </a>
       </li>
       <li>
-        <a href="mailto:your@email.com" class="nav__link nav__link--cta">
-          Contact
+        <a
+          href="/work"
+          class:list={['nav__link', { 'nav__link--active': isActive('/work') }]}
+        >
+          Cases
+        </a>
+      </li>
+      <li>
+        <a
+          href="/resume.pdf"
+          class="nav__link nav__link--resume"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Resume
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+            <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </a>
       </li>
     </ul>
@@ -74,7 +82,7 @@ const isActive = (href: string) => {
     position: sticky;
     top: 0;
     z-index: 100;
-    background: color-mix(in srgb, var(--color-bg) 88%, transparent);
+    background: color-mix(in srgb, var(--color-bg) 92%, transparent);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--color-border);
@@ -89,11 +97,15 @@ const isActive = (href: string) => {
 
   .nav__logo {
     font-size: var(--text-sm);
-    font-weight: var(--weight-semibold);
-    letter-spacing: var(--tracking-wide);
-    text-transform: uppercase;
+    font-weight: var(--weight-medium);
     color: var(--color-text-1);
     transition: opacity var(--transition-base);
+    letter-spacing: var(--tracking-normal);
+  }
+
+  .nav__logo-sep {
+    color: var(--color-text-3);
+    margin-inline: 0.25em;
   }
 
   .nav__logo:hover {
@@ -107,8 +119,11 @@ const isActive = (href: string) => {
   }
 
   .nav__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
     font-size: var(--text-sm);
-    font-weight: var(--weight-medium);
+    font-weight: var(--weight-normal);
     color: var(--color-text-2);
     padding: var(--space-2) var(--space-3);
     border-radius: var(--radius-md);
@@ -117,24 +132,16 @@ const isActive = (href: string) => {
 
   .nav__link:hover {
     color: var(--color-text-1);
-    background: var(--color-bg-subtle);
   }
 
   .nav__link--active {
     color: var(--color-text-1);
-    font-weight: var(--weight-semibold);
+    font-weight: var(--weight-medium);
   }
 
-  .nav__link--cta {
-    color: var(--color-accent);
-    border: 1.5px solid currentColor;
-    padding-inline: var(--space-4);
-    margin-left: var(--space-2);
-  }
-
-  .nav__link--cta:hover {
-    background: var(--color-accent-bg);
-    color: var(--color-accent);
+  .nav__link--resume {
+    color: var(--color-text-1);
+    font-weight: var(--weight-medium);
   }
 
   /* Hamburger */
@@ -157,7 +164,7 @@ const isActive = (href: string) => {
   .burger-line {
     display: block;
     width: 100%;
-    height: 2px;
+    height: 1.5px;
     background: var(--color-text-1);
     border-radius: 2px;
     transition: all var(--transition-base);
@@ -176,7 +183,7 @@ const isActive = (href: string) => {
       flex-direction: column;
       align-items: stretch;
       gap: var(--space-1);
-      background: var(--color-bg-card);
+      background: var(--color-bg);
       border-bottom: 1px solid var(--color-border);
       padding: var(--space-4) var(--page-px);
       box-shadow: var(--shadow-lg);
@@ -186,12 +193,9 @@ const isActive = (href: string) => {
       display: flex;
     }
 
-    .nav__link,
-    .nav__link--cta {
+    .nav__link {
       font-size: var(--text-base);
       padding-block: var(--space-3);
-      border: none;
-      margin: 0;
     }
   }
 </style>

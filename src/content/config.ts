@@ -21,7 +21,6 @@ const mediaItem = z.object({
 const cases = defineCollection({
   type: 'content',
   schema: z.object({
-    /** Page title and card heading */
     title: z.string(),
 
     /** Set to true only after passing the IP checklist in docs/CONTENT_GUIDE.md */
@@ -36,35 +35,32 @@ const cases = defineCollection({
       .enum(['public', 'nda-safe', 'private-draft'])
       .default('public'),
 
-    /** Generalise if the client name is confidential, e.g. "B2B SaaS — Enterprise" */
-    company: z.string().optional(),
+    /**
+     * industry          — professional/commercial work
+     * academic-personal — university, personal, side projects
+     */
+    category: z
+      .enum(['industry', 'academic-personal'])
+      .default('industry'),
 
+    /** Manual display order within the category (lower = shown first) */
+    order: z.number().default(99),
+
+    company: z.string().optional(),
     role: z.string(),
     year: z.number(),
 
-    /** Used for filtering on the Work page and card tags */
     tags: z.array(z.string()).default([]),
 
-    /** Show in the "Selected work" section on the home page */
+    /** true = appears on home page */
     featured: z.boolean().default(false),
 
-    /** One-line outcome-focused blurb shown on cards */
     summary: z.string(),
 
-    /**
-     * Path to the hero image.
-     * Use an absolute path from public/, e.g. /cases/my-project/hero.jpg
-     * Or a full https:// URL for externally hosted images.
-     */
     heroImage: z.string().optional(),
 
-    /** Key results — shown in the Outcomes callout box on the case page */
     outcomes: z.array(z.string()).default([]),
 
-    /**
-     * Additional media shown in the gallery section.
-     * image src / video src follow the same rules as heroImage.
-     */
     media: z.array(mediaItem).default([]),
   }),
 });
