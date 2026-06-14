@@ -6,13 +6,46 @@
     <meta name="robots" content="noindex, nofollow" />
     <title></title>
     <style>
-      html,
-      body {
+      :root {
+        --color-bg: #ffffff;
+        --color-text: #010101;
+        --font-sans: system-ui, sans-serif;
+        --page-px: clamp(1.25rem, 4vw, 3rem);
+        --max-w-wide: 1320px;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
         margin: 0;
+        padding: 0;
+      }
+
+      html {
+        font-size: 16px;
+        -webkit-text-size-adjust: 100%;
+      }
+
+      body {
         min-height: 100dvh;
-        background: #ffffff;
+        font-family: var(--font-sans);
+        color: var(--color-text);
+        background: var(--color-bg);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .page {
+        width: 100%;
+        max-width: var(--max-w-wide);
+        margin-inline: auto;
+        padding-inline: var(--page-px);
       }
     </style>
   </head>
-  <body></body>
+  <body>
+    <header class="page"></header>
+    <main class="page"></main>
+    <footer class="page"></footer>
+  </body>
 </html>
