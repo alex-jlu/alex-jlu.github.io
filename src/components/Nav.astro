@@ -75,6 +75,63 @@ const isActive = (href: string) => {
       wrapper?.classList.remove('nav-wrapper--open');
     });
   });
+
+  if (wrapper) {
+    const hideDelayMs = 220;
+    const scrollThreshold = 48;
+    const topRevealOffset = 72;
+
+    let lastScrollY = window.scrollY;
+    let hideTimer: ReturnType<typeof setTimeout> | null = null;
+    let isHidden = false;
+
+    const showNav = () => {
+      if (hideTimer) {
+        clearTimeout(hideTimer);
+        hideTimer = null;
+      }
+      if (isHidden) {
+        wrapper.classList.remove('nav-wrapper--hidden');
+        isHidden = false;
+      }
+    };
+
+    const hideNav = () => {
+      if (wrapper.classList.contains('nav-wrapper--open')) return;
+      if (isHidden) return;
+
+      wrapper.classList.add('nav-wrapper--hidden');
+      isHidden = true;
+      hideTimer = null;
+    };
+
+    const scheduleHide = () => {
+      if (hideTimer || isHidden || wrapper.classList.contains('nav-wrapper--open')) return;
+
+      hideTimer = window.setTimeout(hideNav, hideDelayMs);
+    };
+
+    const onScroll = () => {
+      const currentScrollY = window.scrollY;
+      const delta = currentScrollY - lastScrollY;
+
+      if (currentScrollY <= topRevealOffset) {
+        showNav();
+        lastScrollY = currentScrollY;
+        return;
+      }
+
+      if (delta > 0 && currentScrollY > scrollThreshold) {
+        scheduleHide();
+      } else if (delta < 0) {
+        showNav();
+      }
+
+      lastScrollY = currentScrollY;
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
 </script>
 
 <style>
@@ -86,6 +143,24 @@ const isActive = (href: string) => {
     z-index: 100;
     max-width: calc(var(--max-w-wide) + var(--page-px) * 2);
     margin-inline: auto;
+    transform: translateY(0);
+    opacity: 1;
+    transition:
+      transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform, opacity;
+  }
+
+  .nav-wrapper--hidden {
+    transform: translateY(calc(-100% - var(--nav-offset-y) - 0.75rem));
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nav-wrapper {
+      transition: none;
+    }
   }
 
   .nav {
@@ -97,6 +172,13 @@ const isActive = (href: string) => {
     background: var(--color-nav-bg);
     border-radius: var(--radius-nav);
     box-shadow: var(--shadow-md);
+    transition: box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .nav-wrapper:not(.nav-wrapper--hidden) .nav {
+    box-shadow:
+      0 4px 12px rgba(0, 0, 0, 0.07),
+      0 12px 40px rgba(0, 0, 0, 0.12);
   }
 
   .nav-wrapper--open .nav {

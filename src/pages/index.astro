@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LogoBar from '../components/LogoBar.astro';
-import CaseRow from '../components/CaseRow.astro';
+import HomeCaseCard from '../components/HomeCaseCard.astro';
 import ContactSection from '../components/ContactSection.astro';
 
 /** Drop your cover photo at public/cover.jpg (or .webp) */
@@ -14,37 +14,41 @@ const industryCases = [
     company: 'Bliq',
     subtitle: 'Generation 3',
     description:
-      'Industrial design, hardware engineering and development of Generation Three product that brought together charging, payments, and mobility in an integrated ecosystem.',
-    tags: 'Hardware lead · System architecture · Industrial design · Product management · Firmware coordination',
-    imageLabel: 'img001',
-    reverse: false,
+      'leading Hardware development - building a robust and scalable AV platform from concept to production.',
+    roles: [
+      'Hardware lead',
+      'Industrial design',
+      'Mechanical, electrical & systems engineering',
+    ],
+    imageLabel: 'img 002',
   },
   {
     company: 'Bace',
     subtitle: 'Mobile Hub',
     description:
-      'Designed and engineered the first mobile EV charging system that could be deployed anywhere.',
-    tags: 'Industrial design · Product engineering · Prototyping · DFM',
-    imageLabel: 'img002',
-    reverse: true,
+      'Development of a mobile parcel locker and peer-to-peer storage system enabling flexible deployment with lower upfront costs.',
+    roles: [
+      'end to end development',
+      'mechanical design & DFMA',
+      'product scoping & IP',
+    ],
+    imageLabel: 'img 003',
   },
   {
     company: 'Bace',
     subtitle: 'Stationary Hub',
     description:
-      'Designed and engineered a stationary EV charging hub for on-site deployments.',
-    tags: 'Industrial design · Mechanical design · Electrical integration · DFM',
-    imageLabel: 'img003',
-    reverse: false,
+      'Development of a parcel station, taking early-stage prototype through to production readiness and market launch.',
+    roles: ['NPI Engineering', 'Electrical Design', 'Product Compliance'],
+    imageLabel: 'img 004',
   },
   {
     company: 'Bosch',
     subtitle: 'GS4000',
     description:
-      'Designed and engineered a Bosch DIY product for professional consumers.',
-    tags: 'Mechanical design · Product engineering · Prototyping · DFM',
-    imageLabel: 'img004',
-    reverse: true,
+      'Supported R&D through hands-on design & engineering for heating appliance project.',
+    roles: ['Engineering Analysis', 'Mechanical Design'],
+    imageLabel: 'img 005',
   },
 ];
 
@@ -53,28 +57,33 @@ const academicCases = [
     company: 'Eco Flow',
     subtitle: 'Portable Tap Filter',
     description:
-      'Academic product development — portable tap filter concept from research through functional prototype.',
-    tags: 'Industrial design · Mechanical design · Prototyping',
-    imageLabel: 'img005',
-    reverse: false,
+      'Development of an automated bath filling system from idea to prototype.',
+    roles: [
+      'Engineering Design & Mathematical Modelling',
+      'Electronics & Embedded Development',
+      'UI & Industrial Design',
+    ],
+    imageLabel: 'img 006',
   },
   {
     company: 'Puraqua',
     subtitle: 'Portable Tap Filter',
     description:
-      'Personal project exploring compact water filtration hardware for domestic use.',
-    tags: 'Industrial design · CAD · Prototyping',
-    imageLabel: 'img006',
-    reverse: true,
+      'User Centric development of a Water filter from idea to production ready solution.',
+    roles: [
+      'Fluid Dynamics & Mechanical Engineering',
+      'User research',
+      'Rapid Prototyping',
+    ],
+    imageLabel: 'img 007',
   },
   {
     company: 'Unknown',
     subtitle: 'Bespoke Surfboards',
     description:
-      'Academic exploration of bespoke surfboard design — materials, form, and manufacturing process.',
-    tags: 'Industrial design · Material research · Fabrication',
-    imageLabel: 'img007',
-    reverse: false,
+      'Founded a small business focused on building surfboards, and products around surfing.',
+    roles: ['Design and Manufacturing', 'Supply chain management', 'Customer Success'],
+    imageLabel: 'img 008',
   },
 ];
 ---
@@ -120,17 +129,17 @@ const academicCases = [
         <p class="cases__subtitle">From industry</p>
       </header>
 
-      <div class="cases__list">
+      <div class="cases__grid">
         {industryCases.map(item => (
-          <CaseRow {...item} />
+          <HomeCaseCard {...item} />
         ))}
       </div>
 
       <p class="cases__subtitle cases__subtitle--section">Academic &amp; Personal</p>
 
-      <div class="cases__list">
+      <div class="cases__grid cases__grid--academic">
         {academicCases.map(item => (
-          <CaseRow {...item} />
+          <HomeCaseCard {...item} />
         ))}
       </div>
 
@@ -276,8 +285,28 @@ const academicCases = [
     margin-bottom: clamp(1.5rem, 3vw, 2rem);
   }
 
-  .cases__list {
-    /* rows separated by spacing only — no top border */
+  .cases__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(1.25rem, 2.5vw, 2rem);
+  }
+
+  .cases__grid--academic {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  @media (max-width: 1100px) {
+    .cases__grid,
+    .cases__grid--academic {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 560px) {
+    .cases__grid,
+    .cases__grid--academic {
+      grid-template-columns: 1fr;
+    }
   }
 
   .cases__disclaimer {
