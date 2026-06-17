@@ -1,0 +1,65 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <p class="footer__copy">&copy; {year} Alexander Ludwig</p>
+    <nav class="footer__links" aria-label="Footer links">
+      <a
+        href="https://linkedin.com/in/your-handle"
+        class="footer__link"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        LinkedIn
+      </a>
+      <a
+        href="https://github.com/alex-jlu"
+        class="footer__link"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        GitHub
+      </a>
+      <a href="mailto:your@email.com" class="footer__link">Email</a>
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--color-border);
+    padding-block: var(--space-8);
+    background: transparent;
+    margin-top: auto;
+  }
+
+  .footer__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  .footer__copy {
+    font-size: var(--text-sm);
+    color: var(--color-text-3);
+  }
+
+  .footer__links {
+    display: flex;
+    gap: var(--space-5);
+  }
+
+  .footer__link {
+    font-size: var(--text-sm);
+    color: var(--color-text-2);
+    transition: color var(--transition-base);
+  }
+
+  .footer__link:hover {
+    color: var(--color-text-1);
+  }
+</style>

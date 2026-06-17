@@ -1,0 +1,347 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LogoBar from '../components/LogoBar.astro';
+import HomeCaseCard from '../components/HomeCaseCard.astro';
+import ContactSection from '../components/ContactSection.astro';
+
+/** Drop your cover photo at public/cover.jpg (or .webp) */
+const coverImage = '/cover.jpg';
+
+const logos = ['bliq', 'BOSCH', 'Bace', 'Eco Flow', 'Puraqua', 'Unknown'];
+
+const industryCases = [
+  {
+    company: 'Bliq',
+    subtitle: 'Generation 3',
+    description:
+      'leading Hardware development - building a robust and scalable AV platform from concept to production.',
+    roles: [
+      'Hardware lead',
+      'Industrial design',
+      'Mechanical, electrical & systems engineering',
+    ],
+    imageLabel: 'img 002',
+  },
+  {
+    company: 'Bace',
+    subtitle: 'Mobile Hub',
+    description:
+      'Development of a mobile parcel locker and peer-to-peer storage system enabling flexible deployment with lower upfront costs.',
+    roles: [
+      'end to end development',
+      'mechanical design & DFMA',
+      'product scoping & IP',
+    ],
+    imageLabel: 'img 003',
+  },
+  {
+    company: 'Bace',
+    subtitle: 'Stationary Hub',
+    description:
+      'Development of a parcel station, taking early-stage prototype through to production readiness and market launch.',
+    roles: ['NPI Engineering', 'Electrical Design', 'Product Compliance'],
+    imageLabel: 'img 004',
+  },
+  {
+    company: 'Bosch',
+    subtitle: 'GS4000',
+    description:
+      'Supported R&D through hands-on design & engineering for heating appliance project.',
+    roles: ['Engineering Analysis', 'Mechanical Design'],
+    imageLabel: 'img 005',
+  },
+];
+
+const academicCases = [
+  {
+    company: 'Eco Flow',
+    subtitle: 'Portable Tap Filter',
+    description:
+      'Development of an automated bath filling system from idea to prototype.',
+    roles: [
+      'Engineering Design & Mathematical Modelling',
+      'Electronics & Embedded Development',
+      'UI & Industrial Design',
+    ],
+    imageLabel: 'img 006',
+  },
+  {
+    company: 'Puraqua',
+    subtitle: 'Portable Tap Filter',
+    description:
+      'User Centric development of a Water filter from idea to production ready solution.',
+    roles: [
+      'Fluid Dynamics & Mechanical Engineering',
+      'User research',
+      'Rapid Prototyping',
+    ],
+    imageLabel: 'img 007',
+  },
+  {
+    company: 'Unknown',
+    subtitle: 'Bespoke Surfboards',
+    description:
+      'Founded a small business focused on building surfboards, and products around surfing.',
+    roles: ['Design and Manufacturing', 'Supply chain management', 'Customer Success'],
+    imageLabel: 'img 008',
+  },
+];
+---
+
+<BaseLayout title="Alexander Ludwig" hideFooter={true}>
+
+  <!-- Hero + logo bar -->
+  <section class="hero">
+    <div class="container hero__grid">
+      <div class="hero__copy">
+        <h1 class="hero__heading">
+          I design, engineer &amp; lead<br />hardware products
+        </h1>
+        <p class="hero__accent">From Idea to Manufacturing</p>
+        <p class="hero__disciplines">
+          Mechanical Design · Electrical design · Industrial design · System Engineering
+        </p>
+        <hr class="hero__rule" />
+        <p class="hero__reputation">
+          4+ years in consumer electronics across industries — startup-minded, balancing
+          creative concept with engineering rigor to build hardware that ships.
+        </p>
+      </div>
+
+      <figure class="hero__media">
+        <img
+          src={coverImage}
+          alt="Alexander Ludwig"
+          class="hero__cover"
+          loading="eager"
+          decoding="async"
+          onerror="this.hidden = true"
+        />
+      </figure>
+    </div>
+  </section>
+
+  <LogoBar logos={logos} />
+  <section class="surface-grid cases" id="cases" aria-labelledby="cases-heading">
+    <div class="container">
+      <header class="cases__header">
+        <h2 class="cases__title" id="cases-heading">Cases</h2>
+        <p class="cases__subtitle">From industry</p>
+      </header>
+
+      <div class="cases__grid">
+        {industryCases.map(item => (
+          <HomeCaseCard {...item} />
+        ))}
+      </div>
+
+      <p class="cases__subtitle cases__subtitle--section">Academic &amp; Personal</p>
+
+      <div class="cases__grid cases__grid--academic">
+        {academicCases.map(item => (
+          <HomeCaseCard {...item} />
+        ))}
+      </div>
+
+      <p class="cases__disclaimer">
+        Case studies describe my role and contributions. Some content is generalised
+        to respect confidentiality. Illustrative visuals are labelled where used.
+      </p>
+    </div>
+  </section>
+
+  <ContactSection />
+
+</BaseLayout>
+
+<script>
+  function syncHeroMediaHeight() {
+    const copy = document.querySelector<HTMLElement>('.hero__copy');
+    const media = document.querySelector<HTMLElement>('.hero__media');
+    if (!copy || !media) return;
+
+    if (window.matchMedia('(max-width: 900px)').matches) {
+      media.style.minHeight = '';
+      return;
+    }
+
+    media.style.minHeight = `${copy.offsetHeight}px`;
+  }
+
+  syncHeroMediaHeight();
+  window.addEventListener('resize', syncHeroMediaHeight);
+  document.fonts?.ready.then(syncHeroMediaHeight);
+</script>
+
+<style>
+  /* ── Hero ─────────────────────────────────────────────────────── */
+  .hero {
+    padding-block: clamp(1.5rem, 3vw, 2.5rem) clamp(2rem, 4vw, 3rem);
+  }
+
+  .hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) var(--hero-media-w);
+    align-items: stretch;
+    gap: clamp(1rem, 2vw, 1.75rem);
+  }
+
+  .hero__copy {
+    grid-column: 1;
+    grid-row: 1;
+    max-width: var(--hero-copy-max);
+  }
+
+  .hero__heading {
+    font-size: var(--text-hero);
+    font-weight: var(--weight-medium);
+    line-height: 1.08;
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-black);
+    margin-bottom: var(--space-5);
+  }
+
+  .hero__accent {
+    font-size: var(--text-hero-accent);
+    font-weight: var(--weight-medium);
+    line-height: 1.1;
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-accent);
+    margin-bottom: var(--space-6);
+  }
+
+  .hero__disciplines {
+    font-size: var(--text-sm);
+    color: var(--color-text-3);
+    line-height: var(--leading-normal);
+    margin-bottom: var(--space-5);
+  }
+
+  .hero__rule {
+    border: none;
+    border-top: 1px solid var(--color-border);
+    margin-bottom: var(--space-5);
+  }
+
+  .hero__reputation {
+    font-size: var(--text-sm);
+    line-height: var(--leading-loose);
+    color: var(--color-text-2);
+    max-width: 48ch;
+  }
+
+  .hero__media {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0;
+    min-height: 100%;
+    height: 100%;
+    display: grid;
+    background: var(--color-hero-media);
+    border-radius: var(--radius-media);
+    overflow: hidden;
+  }
+
+  .hero__cover {
+    grid-area: 1 / 1;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
+
+  /* ── Cases (grid overlay) ─────────────────────────────────────── */
+  .cases {
+    padding-block: clamp(3rem, 6vw, 5rem) clamp(4rem, 8vw, 6rem);
+  }
+
+  .cases__header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+  }
+
+  .cases__title {
+    font-size: var(--text-cases-title);
+    font-weight: var(--weight-medium);
+    line-height: 1;
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-black);
+  }
+
+  .cases__subtitle {
+    font-size: var(--text-cases-sub);
+    font-weight: var(--weight-medium);
+    line-height: 1;
+    color: var(--color-accent);
+    white-space: nowrap;
+  }
+
+  .cases__subtitle--section {
+    margin-top: clamp(3rem, 6vw, 5rem);
+    margin-bottom: clamp(1.5rem, 3vw, 2rem);
+  }
+
+  .cases__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(1.25rem, 2.5vw, 2rem);
+  }
+
+  .cases__grid--academic {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  @media (max-width: 1100px) {
+    .cases__grid,
+    .cases__grid--academic {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 560px) {
+    .cases__grid,
+    .cases__grid--academic {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .cases__disclaimer {
+    margin-top: var(--space-12);
+    font-size: var(--text-xs);
+    color: var(--color-text-3);
+    line-height: var(--leading-normal);
+    max-width: 60ch;
+  }
+
+  @media (max-width: 900px) {
+    .hero__grid {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto;
+    }
+
+    .hero__copy {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .hero__grid {
+      gap: var(--space-5);
+    }
+
+    .hero__media {
+      grid-column: 1;
+      grid-row: 2;
+      min-height: 280px;
+      height: auto;
+      aspect-ratio: 16 / 10;
+    }
+
+    .hero__cover {
+      min-height: 280px;
+    }
+  }
+</style>
