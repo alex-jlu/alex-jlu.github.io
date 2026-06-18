@@ -3,89 +3,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import LogoBar from '../components/LogoBar.astro';
 import HomeCaseCard from '../components/HomeCaseCard.astro';
 import ContactSection from '../components/ContactSection.astro';
+import ImageSlot from '../components/ImageSlot.astro';
+import { academicCases, industryCases } from '../data/homeCases';
 
 /** Drop your cover photo at public/cover.jpg (or .webp) */
 const coverImage = '/cover.jpg';
 
 const logos = ['bliq', 'BOSCH', 'Bace', 'Eco Flow', 'Puraqua', 'Unknown'];
-
-const industryCases = [
-  {
-    company: 'Bliq',
-    subtitle: 'Generation 3',
-    description:
-      'leading Hardware development - building a robust and scalable AV platform from concept to production.',
-    roles: [
-      'Hardware lead',
-      'Industrial design',
-      'Mechanical, electrical & systems engineering',
-    ],
-    imageLabel: 'img 002',
-  },
-  {
-    company: 'Bace',
-    subtitle: 'Mobile Hub',
-    description:
-      'Development of a mobile parcel locker and peer-to-peer storage system enabling flexible deployment with lower upfront costs.',
-    roles: [
-      'end to end development',
-      'mechanical design & DFMA',
-      'product scoping & IP',
-    ],
-    imageLabel: 'img 003',
-  },
-  {
-    company: 'Bace',
-    subtitle: 'Stationary Hub',
-    description:
-      'Development of a parcel station, taking early-stage prototype through to production readiness and market launch.',
-    roles: ['NPI Engineering', 'Electrical Design', 'Product Compliance'],
-    imageLabel: 'img 004',
-  },
-  {
-    company: 'Bosch',
-    subtitle: 'GS4000',
-    description:
-      'Supported R&D through hands-on design & engineering for heating appliance project.',
-    roles: ['Engineering Analysis', 'Mechanical Design'],
-    imageLabel: 'img 005',
-  },
-];
-
-const academicCases = [
-  {
-    company: 'Eco Flow',
-    subtitle: 'Portable Tap Filter',
-    description:
-      'Development of an automated bath filling system from idea to prototype.',
-    roles: [
-      'Engineering Design & Mathematical Modelling',
-      'Electronics & Embedded Development',
-      'UI & Industrial Design',
-    ],
-    imageLabel: 'img 006',
-  },
-  {
-    company: 'Puraqua',
-    subtitle: 'Portable Tap Filter',
-    description:
-      'User Centric development of a Water filter from idea to production ready solution.',
-    roles: [
-      'Fluid Dynamics & Mechanical Engineering',
-      'User research',
-      'Rapid Prototyping',
-    ],
-    imageLabel: 'img 007',
-  },
-  {
-    company: 'Unknown',
-    subtitle: 'Bespoke Surfboards',
-    description:
-      'Founded a small business focused on building surfboards, and products around surfing.',
-    roles: ['Design and Manufacturing', 'Supply chain management', 'Customer Success'],
-    imageLabel: 'img 008',
-  },
-];
 ---
 
 <BaseLayout title="Alexander Ludwig" hideFooter={true}>
@@ -109,13 +33,13 @@ const academicCases = [
       </div>
 
       <figure class="hero__media">
-        <img
+        <ImageSlot
           src={coverImage}
           alt="Alexander Ludwig"
-          class="hero__cover"
+          label="photo"
+          tone="hero"
+          aspect="fill"
           loading="eager"
-          decoding="async"
-          onerror="this.hidden = true"
         />
       </figure>
     </div>
@@ -237,18 +161,13 @@ const academicCases = [
     min-height: 100%;
     height: 100%;
     display: grid;
-    background: var(--color-hero-media);
     border-radius: var(--radius-media);
     overflow: hidden;
   }
 
-  .hero__cover {
+  .hero__media :global(.image-slot) {
     grid-area: 1 / 1;
-    width: 100%;
-    height: 100%;
-    min-height: 100%;
-    object-fit: cover;
-    object-position: center center;
+    border-radius: 0;
   }
 
   /* ── Cases (grid overlay) ─────────────────────────────────────── */
@@ -340,7 +259,7 @@ const academicCases = [
       aspect-ratio: 16 / 10;
     }
 
-    .hero__cover {
+    .hero__media :global(.image-slot) {
       min-height: 280px;
     }
   }

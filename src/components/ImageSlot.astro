@@ -1,0 +1,123 @@
+---
+interface Props {
+  src?: string;
+  alt?: string;
+  label?: string;
+  aspect?: 'square' | 'portrait' | 'wide' | 'fill';
+  tone?: 'light' | 'dark' | 'grid' | 'hero';
+  loading?: 'lazy' | 'eager';
+  class?: string;
+}
+
+const {
+  src = '',
+  alt = '',
+  label = 'img',
+  aspect = 'square',
+  tone = 'light',
+  loading = 'lazy',
+  class: className,
+} = Astro.props;
+
+const hasSrc = Boolean(src);
+---
+
+<figure
+  class:list={[
+    'image-slot',
+    `image-slot--${aspect}`,
+    `image-slot--${tone}`,
+    className,
+  ]}
+>
+  <span class="image-slot__label" aria-hidden={hasSrc ? 'true' : undefined}>{label}</span>
+  {hasSrc && (
+    <img
+      src={src}
+      alt={alt}
+      class="image-slot__img"
+      loading={loading}
+      decoding="async"
+      onerror="this.hidden=true"
+    />
+  )}
+</figure>
+
+<style>
+  .image-slot {
+    position: relative;
+    margin: 0;
+    width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-media);
+    background: var(--color-bg-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .image-slot--square {
+    aspect-ratio: 1;
+  }
+
+  .image-slot--portrait {
+    aspect-ratio: 3 / 4;
+  }
+
+  .image-slot--wide {
+    aspect-ratio: 16 / 9;
+  }
+
+  .image-slot--fill {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    aspect-ratio: unset;
+  }
+
+  .image-slot--hero {
+    background: var(--color-bg-subtle);
+    border-color: var(--color-border);
+  }
+
+  .image-slot--dark {
+    background: #525252;
+    border-color: var(--color-text-3);
+  }
+
+  .image-slot--dark .image-slot__label {
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .image-slot--grid {
+    background-color: var(--color-bg-subtle);
+    border-color: var(--color-border);
+    background-image:
+      linear-gradient(var(--color-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-grid) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .image-slot--grid .image-slot__label {
+    color: var(--color-text-3);
+  }
+
+  .image-slot__label {
+    font-size: var(--text-sm);
+    color: var(--color-text-3);
+    user-select: none;
+    z-index: 0;
+  }
+
+  .image-slot__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 1;
+  }
+</style>

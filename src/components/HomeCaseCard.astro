@@ -2,108 +2,167 @@
 interface Props {
   company: string;
   subtitle: string;
-  description: string;
+  description?: string;
   roles: string[];
   image?: string;
   imageLabel?: string;
   href?: string;
+  compact?: boolean;
 }
 
 const {
   company,
   subtitle,
-  description,
+  description = '',
   roles,
   image,
   imageLabel = 'img',
   href,
+  compact = false,
 } = Astro.props;
 
 const imageAlt = `${company} — ${subtitle}`;
+const cardClass = [
+  'home-case-card',
+  href && 'home-case-card--linked',
+  compact && 'home-case-card--compact',
+]
+  .filter(Boolean)
+  .join(' ');
 ---
 
-<article class="home-case-card">
-  {href ? (
-    <a href={href} class="home-case-card__link">
-      <div class="home-case-card__media">
-        {image ? (
-          <img
-            src={image}
-            alt={imageAlt}
-            class="home-case-card__image"
-            loading="lazy"
-            decoding="async"
-          />
-        ) : (
-          <div class="home-case-card__placeholder" aria-hidden="true">
-            <span class="home-case-card__placeholder-label">{imageLabel}</span>
-          </div>
-        )}
-      </div>
+{href ? (
+  <a href={href} class={cardClass}>
+    <div class="home-case-card__media">
+      {image ? (
+        <img
+          src={image}
+          alt={imageAlt}
+          class="home-case-card__image"
+          loading="lazy"
+          decoding="async"
+        />
+      ) : (
+        <div class="home-case-card__placeholder" aria-hidden="true">
+          <span class="home-case-card__placeholder-label">{imageLabel}</span>
+        </div>
+      )}
+    </div>
 
-      <div class="home-case-card__banner">
-        <p class="home-case-card__company">{company}</p>
-        <p class="home-case-card__subtitle">{subtitle}</p>
-      </div>
-    </a>
-  ) : (
-    <>
-      <div class="home-case-card__media">
-        {image ? (
-          <img
-            src={image}
-            alt={imageAlt}
-            class="home-case-card__image"
-            loading="lazy"
-            decoding="async"
-          />
-        ) : (
-          <div class="home-case-card__placeholder" aria-hidden="true">
-            <span class="home-case-card__placeholder-label">{imageLabel}</span>
-          </div>
-        )}
-      </div>
+    <div class="home-case-card__banner">
+      <p class="home-case-card__company">{company}</p>
+      <p class="home-case-card__subtitle">{subtitle}</p>
+    </div>
 
-      <div class="home-case-card__banner">
-        <p class="home-case-card__company">{company}</p>
-        <p class="home-case-card__subtitle">{subtitle}</p>
-      </div>
-    </>
-  )}
+    <div class="home-case-card__body">
+      {!compact && (
+        <>
+          <p class="home-case-card__description">{description}</p>
+          <hr class="home-case-card__rule" />
+          <ul class="home-case-card__roles" role="list">
+            {roles.map(role => (
+              <li>
+                <span class="home-case-card__pill">{role}</span>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+      {compact && (
+        <ul class="home-case-card__roles home-case-card__roles--text" role="list">
+          {roles.map(role => (
+            <li class="home-case-card__role-line">{role}</li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </a>
+) : (
+  <article class={cardClass}>
+    <div class="home-case-card__media">
+      {image ? (
+        <img
+          src={image}
+          alt={imageAlt}
+          class="home-case-card__image"
+          loading="lazy"
+          decoding="async"
+        />
+      ) : (
+        <div class="home-case-card__placeholder" aria-hidden="true">
+          <span class="home-case-card__placeholder-label">{imageLabel}</span>
+        </div>
+      )}
+    </div>
 
-  <div class="home-case-card__body">
-    <p class="home-case-card__description">{description}</p>
-    <hr class="home-case-card__rule" />
-    <ul class="home-case-card__roles" role="list">
-      {roles.map(role => (
-        <li>
-          <span class="home-case-card__pill">{role}</span>
-        </li>
-      ))}
-    </ul>
-  </div>
-</article>
+    <div class="home-case-card__banner">
+      <p class="home-case-card__company">{company}</p>
+      <p class="home-case-card__subtitle">{subtitle}</p>
+    </div>
+
+    <div class="home-case-card__body">
+      {!compact && (
+        <>
+          <p class="home-case-card__description">{description}</p>
+          <hr class="home-case-card__rule" />
+          <ul class="home-case-card__roles" role="list">
+            {roles.map(role => (
+              <li>
+                <span class="home-case-card__pill">{role}</span>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+      {compact && (
+        <ul class="home-case-card__roles home-case-card__roles--text" role="list">
+          {roles.map(role => (
+            <li class="home-case-card__role-line">{role}</li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </article>
+)}
 
 <style>
   .home-case-card {
     display: flex;
     flex-direction: column;
     min-width: 0;
+    text-decoration: none;
+    color: inherit;
+    border-radius: var(--radius-lg);
+    transition: transform var(--transition-base);
   }
 
-  .home-case-card__link {
-    display: block;
-    transition: opacity var(--transition-base);
+  .home-case-card--linked {
+    cursor: pointer;
   }
 
-  .home-case-card__link:hover {
-    opacity: 0.88;
+  .home-case-card:hover,
+  .home-case-card:focus-visible {
+    transform: translateY(-4px);
+  }
+
+  .home-case-card--linked:focus-visible {
+    outline: 2px solid var(--color-black);
+    outline-offset: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .home-case-card:hover,
+    .home-case-card:focus-visible {
+      transform: none;
+    }
   }
 
   .home-case-card__media {
     aspect-ratio: 1;
     width: 100%;
     overflow: hidden;
+    box-sizing: border-box;
+    border: 1px solid var(--color-border);
     background: var(--color-bg-subtle);
     border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   }
@@ -113,6 +172,28 @@ const imageAlt = `${company} — ${subtitle}`;
     width: 100%;
     height: 100%;
     display: block;
+    transition: transform var(--transition-base);
+  }
+
+  .home-case-card:hover .home-case-card__image,
+  .home-case-card:hover .home-case-card__placeholder,
+  .home-case-card:focus-visible .home-case-card__image,
+  .home-case-card:focus-visible .home-case-card__placeholder {
+    transform: scale(1.04);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .home-case-card__image,
+    .home-case-card__placeholder {
+      transition: none;
+    }
+
+    .home-case-card:hover .home-case-card__image,
+    .home-case-card:hover .home-case-card__placeholder,
+    .home-case-card:focus-visible .home-case-card__image,
+    .home-case-card:focus-visible .home-case-card__placeholder {
+      transform: none;
+    }
   }
 
   .home-case-card__image {
@@ -136,6 +217,12 @@ const imageAlt = `${company} — ${subtitle}`;
     color: var(--color-white);
     padding: var(--space-4) var(--space-4) var(--space-3);
     border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    transition: background-color var(--transition-base);
+  }
+
+  .home-case-card:hover .home-case-card__banner,
+  .home-case-card:focus-visible .home-case-card__banner {
+    background: var(--color-dark);
   }
 
   .home-case-card__company {
@@ -168,6 +255,12 @@ const imageAlt = `${company} — ${subtitle}`;
     line-height: var(--leading-loose);
     color: var(--color-text-2);
     margin-bottom: var(--space-5);
+    transition: color var(--transition-base);
+  }
+
+  .home-case-card:hover .home-case-card__description,
+  .home-case-card:focus-visible .home-case-card__description {
+    color: var(--color-text-1);
   }
 
   .home-case-card__rule {
@@ -175,6 +268,12 @@ const imageAlt = `${company} — ${subtitle}`;
     border-top: 1px solid var(--color-border);
     margin-bottom: var(--space-3);
     width: 100%;
+    transition: border-color var(--transition-base);
+  }
+
+  .home-case-card:hover .home-case-card__rule,
+  .home-case-card:focus-visible .home-case-card__rule {
+    border-color: var(--color-text-3);
   }
 
   .home-case-card__roles {
@@ -197,5 +296,66 @@ const imageAlt = `${company} — ${subtitle}`;
     letter-spacing: var(--tracking-wide);
     line-height: 1;
     border-radius: var(--radius-pill);
+    transition: background-color var(--transition-base);
+  }
+
+  .home-case-card:hover .home-case-card__pill,
+  .home-case-card:focus-visible .home-case-card__pill {
+    background: var(--color-text-1);
+  }
+
+  .home-case-card--compact:hover,
+  .home-case-card--compact:focus-visible {
+    transform: translateY(-2px);
+  }
+
+  .home-case-card--compact {
+    border-radius: 0;
+  }
+
+  .home-case-card--compact .home-case-card__media {
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  }
+
+  .home-case-card--compact .home-case-card__banner {
+    padding: var(--space-2) var(--space-3) var(--space-2);
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  }
+
+  .home-case-card--compact .home-case-card__company {
+    font-size: var(--text-xs);
+  }
+
+  .home-case-card--compact .home-case-card__subtitle {
+    font-size: 0.625rem;
+    margin-top: 0.15em;
+  }
+
+  .home-case-card--compact .home-case-card__body {
+    padding-top: var(--space-2);
+  }
+
+  .home-case-card--compact .home-case-card__roles--text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .home-case-card--compact .home-case-card__role-line {
+    font-size: 0.625rem;
+    line-height: 1.35;
+    color: var(--color-text-2);
+  }
+
+  .home-case-card--compact:hover .home-case-card__role-line,
+  .home-case-card--compact:focus-visible .home-case-card__role-line {
+    color: var(--color-text-1);
+  }
+
+  .home-case-card--compact .home-case-card__placeholder-label {
+    font-size: var(--text-xs);
   }
 </style>

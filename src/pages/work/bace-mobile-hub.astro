@@ -1,0 +1,596 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HomeCaseCard from '../../components/HomeCaseCard.astro';
+import ImageSlot from '../../components/ImageSlot.astro';
+import { academicCases, industryCases } from '../../data/homeCases';
+
+const currentHref = '/work/bace-mobile-hub';
+const moreIndustryCases = industryCases.filter(item => item.href !== currentHref);
+
+/** Drop images into public/cases/bace-mobile-hub/ when ready */
+const images = {
+  hero: '',
+  myRole: '',
+  features: '',
+  responsibilities: ['', '', ''],
+  solution: ['', ''],
+};
+
+const imageLabels = {
+  hero: 'img 003',
+  myRole: 'img 003b',
+  features: 'img 003 sketch',
+  responsibilities: ['img 003-1', 'img 003-2', 'img 003-3'],
+  solution: ['img 003-4', 'img 003-5'],
+};
+
+const features = [
+  {
+    title: 'Mobility vs. Stability',
+    text: 'A deployable locker platform that stays stable in daily operation without permanent installation or heavy foundations.',
+  },
+  {
+    title: 'Dimensional & Weight Constraints',
+    text: 'Transport, packaging, and on-site handling limits shaped the structural layout, access points, and service strategy.',
+  },
+  {
+    title: 'Solo Operator Workflow',
+    text: 'Designed around one-person setup, daily operation, and maintenance in varied urban environments.',
+  },
+  {
+    title: 'Environmental Readiness',
+    text: 'Outdoor exposure, temperature swings, and public-use durability requirements were designed in from early concept stages.',
+  },
+];
+
+const responsibilities = [
+  {
+    title: 'Product Definition & Requirements Engineering',
+    text: 'Defined product scope, requirements, and deployment constraints with stakeholders to align hardware development with market and operator needs.',
+  },
+  {
+    title: 'Concept Development & Mechanical Design',
+    text: 'Developed concepts through CAD, prototyping, and iteration — translating early ideas into a manufacturable mechanical architecture.',
+  },
+  {
+    title: 'DFMEA & Usability Testing',
+    text: 'Led structured risk analysis and hands-on usability validation to de-risk the design before production and field deployment.',
+  },
+];
+---
+
+<BaseLayout
+  title="Bace · Mobile Hub"
+  description="Bace Mobile Hub — from concept to market in five months."
+  hideFooter={true}
+>
+  <!-- 1 · Intro -->
+  <section class="mh-section mh-section--light">
+    <div class="container mh-split">
+      <ImageSlot
+        src={images.hero}
+        alt="Bace Mobile Hub in an urban environment"
+        label={imageLabels.hero}
+        class="mh-intro-slot"
+      />
+
+      <div class="mh-intro__copy">
+        <p class="mh-intro__brand">bace</p>
+        <p class="mh-intro__badge">Mobile Hub</p>
+        <h1 class="mh-intro__headline">From Concept to Market in 5 Months</h1>
+
+        <div class="mh-copy">
+          <h2 class="mh-copy__label">The Challenge</h2>
+          <p>
+            Bace needed a mobile parcel locker and peer-to-peer storage system that could be deployed
+            quickly, without the upfront cost and permanence of a fixed station.
+          </p>
+          <p>
+            The product had to balance mobility with day-to-day reliability, meet tight dimensional and
+            weight constraints for transport, and be operable by a single person in real urban conditions.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 · My Role -->
+  <section class="mh-section mh-section--dark">
+    <div class="container mh-split mh-split--center">
+      <ImageSlot
+        src={images.myRole}
+        alt="Engineering work on the Bace Mobile Hub"
+        label={imageLabels.myRole}
+        tone="dark"
+      />
+
+      <div class="mh-copy mh-copy--inverse">
+        <h2 class="mh-copy__heading">My Role</h2>
+        <p>
+          I led end-to-end hardware development — from early concept and product scoping through
+          mechanical design, prototyping, and production readiness.
+        </p>
+        <p>
+          My work covered DFMA, supplier coordination, and IP considerations while keeping the product
+          aligned with deployment timelines and operator workflows in the field.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · Key Features -->
+  <section class="mh-section mh-section--grid">
+    <div class="container mh-split">
+      <ImageSlot
+        src={images.features}
+        alt="Technical sketch of the Bace Mobile Hub"
+        label={imageLabels.features}
+        tone="grid"
+      />
+
+      <div class="mh-features">
+        <article class="mh-features__item">
+          <h2 class="mh-features__label">Key KPI</h2>
+          <p class="mh-features__text">
+            Enable <strong>200+ parcel drops per day</strong> with just one operator.
+          </p>
+        </article>
+
+        {features.map(item => (
+          <>
+            <hr class="mh-features__rule" />
+            <article class="mh-features__item">
+              <h3 class="mh-features__label">{item.title}</h3>
+              <p class="mh-features__text">{item.text}</p>
+            </article>
+          </>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · My key responsibilities -->
+  <section class="mh-section mh-section--light">
+    <div class="container">
+      <p class="mh-section-badge">My key responsibilities</p>
+
+      <div class="mh-responsibilities">
+        {responsibilities.map((item, index) => (
+          <article class="mh-responsibility">
+            <ImageSlot
+              src={images.responsibilities[index]}
+              alt={item.title}
+              label={imageLabels.responsibilities[index]}
+            />
+            <h3 class="mh-responsibility__title">{item.title}</h3>
+            <p class="mh-responsibility__text">{item.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · Solution -->
+  <section class="mh-section mh-section--dark">
+    <div class="container">
+      <h2 class="mh-copy__heading mh-copy__heading--inverse mh-solution__title">Solution</h2>
+
+      <div class="mh-solution">
+        <ImageSlot
+          src={images.solution[0]}
+          alt="Bace Mobile Hub deployed outside a storefront"
+          label={imageLabels.solution[0]}
+          aspect="portrait"
+          tone="dark"
+        />
+
+        <ImageSlot
+          src={images.solution[1]}
+          alt="Bace Mobile Hub loaded into a delivery vehicle"
+          label={imageLabels.solution[1]}
+          aspect="portrait"
+          tone="dark"
+        />
+
+        <div class="mh-copy mh-copy--inverse mh-solution__copy">
+          <p>
+            The final mobile hub combined a deployable locker platform with integrated software for
+            parcel handoff, operator workflows, and remote monitoring — ready for field deployment without
+            permanent infrastructure.
+          </p>
+          <p>
+            The system was engineered for rapid setup, daily operation by a single user, and scalable
+            rollout across urban sites, with design decisions protected through the product development
+            and IP process.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 · More cases -->
+  <section class="mh-more-cases" aria-labelledby="mh-more-heading">
+    <div class="container">
+      <header class="mh-more-cases__header">
+        <h2 class="mh-more-cases__title" id="mh-more-heading">More cases</h2>
+      </header>
+
+      <div class="mh-more-cases__scroll" tabindex="0">
+        <div class="mh-more-cases__track">
+          <div class="mh-more-cases__group">
+            <p class="mh-more-cases__vlabel" aria-hidden="true">Industry</p>
+            <h3 class="sr-only">Industry</h3>
+            <div class="mh-more-cases__cards">
+              {moreIndustryCases.map(item => (
+                <HomeCaseCard {...item} compact />
+              ))}
+            </div>
+          </div>
+
+          <div class="mh-more-cases__divider" aria-hidden="true"></div>
+
+          <div class="mh-more-cases__group">
+            <p class="mh-more-cases__vlabel" aria-hidden="true">Academic &amp; Personal</p>
+            <h3 class="sr-only">Academic &amp; Personal</h3>
+            <div class="mh-more-cases__cards">
+              {academicCases.map(item => (
+                <HomeCaseCard {...item} compact />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · Footer band -->
+  <section class="mh-section mh-section--dark mh-section--footer" aria-hidden="true"></section>
+</BaseLayout>
+
+<script>
+  function syncMobileHubIntroHeight() {
+    const copy = document.querySelector<HTMLElement>('.mh-intro__copy');
+    const slot = document.querySelector<HTMLElement>('.mh-intro-slot');
+    if (!copy || !slot) return;
+
+    if (window.matchMedia('(max-width: 900px)').matches) {
+      slot.style.minHeight = '';
+      return;
+    }
+
+    slot.style.minHeight = `${copy.offsetHeight}px`;
+  }
+
+  syncMobileHubIntroHeight();
+  window.addEventListener('resize', syncMobileHubIntroHeight);
+  document.fonts?.ready.then(syncMobileHubIntroHeight);
+</script>
+
+<style>
+  /* ── Sections ──────────────────────────────────────────────────── */
+  .mh-section {
+    padding-block: clamp(2rem, 4vw, 3.5rem);
+  }
+
+  .mh-section--light {
+    background: var(--color-bg);
+  }
+
+  .mh-section--dark {
+    background: var(--color-black);
+  }
+
+  .mh-section--grid {
+    background: var(--color-bg);
+    background-image:
+      linear-gradient(var(--color-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-grid) 1px, transparent 1px);
+    background-size: var(--grid-size) var(--grid-size);
+  }
+
+  .mh-section--footer {
+    min-height: clamp(14rem, 28vw, 22rem);
+    padding-block: 0;
+  }
+
+  .mh-section-badge {
+    display: inline-block;
+    margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+    padding: var(--space-2) var(--space-4);
+    background: var(--color-black);
+    color: var(--color-white);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    border-radius: var(--radius-sm);
+  }
+
+  /* ── Two-column layout ───────────────────────────────────────── */
+  .mh-split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+    gap: clamp(1.5rem, 3.5vw, 3rem);
+  }
+
+  .mh-split--center {
+    align-items: center;
+  }
+
+  /* ── Image slots ─────────────────────────────────────────────── */
+  .mh-intro-slot {
+    width: 100%;
+  }
+
+  .mh-responsibility :global(.image-slot) {
+    max-width: 420px;
+  }
+
+  .mh-solution :global(.image-slot) {
+    max-width: 320px;
+  }
+
+  /* ── Intro copy ────────────────────────────────────────────────── */
+  .mh-intro__brand {
+    font-size: clamp(2.75rem, 5.5vw, 4rem);
+    font-weight: var(--weight-semibold);
+    line-height: 1;
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-black);
+    margin-bottom: var(--space-4);
+  }
+
+  .mh-intro__badge {
+    display: inline-block;
+    margin-bottom: var(--space-6);
+    padding: var(--space-2) var(--space-4);
+    background: var(--color-black);
+    color: var(--color-white);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    border-radius: var(--radius-sm);
+  }
+
+  .mh-intro__headline {
+    font-size: clamp(var(--text-xl), 2.2vw, var(--text-2xl));
+    font-weight: var(--weight-medium);
+    line-height: var(--leading-snug);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-black);
+    margin-bottom: var(--space-8);
+    max-width: 18ch;
+  }
+
+  /* ── Text blocks ─────────────────────────────────────────────── */
+  .mh-copy {
+    max-width: 44ch;
+  }
+
+  .mh-copy__label,
+  .mh-copy__heading {
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    margin-bottom: var(--space-3);
+  }
+
+  .mh-copy__heading {
+    font-size: clamp(var(--text-xl), 2.2vw, var(--text-2xl));
+    font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-tight);
+    margin-bottom: var(--space-6);
+  }
+
+  .mh-copy__heading--inverse {
+    color: var(--color-white);
+  }
+
+  .mh-copy__label {
+    color: var(--color-black);
+  }
+
+  .mh-copy p,
+  .mh-features__text,
+  .mh-responsibility__text {
+    font-size: var(--text-sm);
+    line-height: var(--leading-loose);
+    color: var(--color-text-2);
+  }
+
+  .mh-copy p + p {
+    margin-top: var(--space-4);
+  }
+
+  .mh-copy--inverse .mh-copy__heading,
+  .mh-copy--inverse p {
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .mh-copy--inverse .mh-copy__heading {
+    color: var(--color-white);
+  }
+
+  /* ── Features list ─────────────────────────────────────────────── */
+  .mh-features {
+    max-width: 44ch;
+  }
+
+  .mh-features__label {
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    color: var(--color-black);
+    margin-bottom: var(--space-2);
+  }
+
+  .mh-features__text strong {
+    color: var(--color-highlight);
+    font-weight: var(--weight-semibold);
+  }
+
+  .mh-features__rule {
+    border: none;
+    border-top: 1px solid var(--color-border);
+    margin-block: var(--space-5);
+  }
+
+  /* ── Responsibilities ──────────────────────────────────────────── */
+  .mh-responsibilities {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1.25rem, 2.5vw, 2rem);
+  }
+
+  .mh-responsibility__title {
+    margin-top: var(--space-4);
+    margin-bottom: var(--space-3);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-snug);
+    color: var(--color-black);
+  }
+
+  /* ── Solution ──────────────────────────────────────────────────── */
+  .mh-solution__title {
+    margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .mh-solution {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 0.85fr) minmax(0, 1.3fr);
+    gap: clamp(1rem, 2vw, 1.5rem);
+    align-items: start;
+  }
+
+  .mh-solution__copy {
+    max-width: none;
+  }
+
+  @media (max-width: 900px) {
+    .mh-split {
+      grid-template-columns: 1fr;
+    }
+
+    .mh-intro-slot {
+      max-width: 420px;
+    }
+
+    .mh-responsibilities {
+      grid-template-columns: 1fr;
+    }
+
+    .mh-responsibility :global(.image-slot) {
+      max-width: 420px;
+    }
+
+    .mh-solution {
+      grid-template-columns: 1fr;
+    }
+
+    .mh-solution :global(.image-slot) {
+      max-width: 320px;
+    }
+  }
+
+  @media (min-width: 901px) {
+    .mh-section--light .mh-split .mh-intro-slot {
+      min-height: 320px;
+      height: auto;
+    }
+  }
+
+  @media (max-width: 640px) and (min-width: 501px) {
+    .mh-responsibilities {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* ── More cases ────────────────────────────────────────────────── */
+  .mh-more-cases {
+    background: var(--color-white);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    padding-block: clamp(2.5rem, 5vw, 3.5rem);
+  }
+
+  .mh-more-cases__header {
+    margin-bottom: var(--space-6);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .mh-more-cases__title {
+    font-size: clamp(var(--text-lg), 2vw, var(--text-xl));
+    font-weight: var(--weight-medium);
+    line-height: 1;
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-black);
+  }
+
+  .mh-more-cases__scroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-text-3) transparent;
+    margin-inline: calc(-1 * var(--page-px));
+    padding-inline: var(--page-px);
+  }
+
+  .mh-more-cases__scroll:focus-visible {
+    outline: 2px solid var(--color-black);
+    outline-offset: 2px;
+  }
+
+  .mh-more-cases__track {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: var(--space-4);
+    width: max-content;
+    min-width: 100%;
+    padding-bottom: var(--space-2);
+  }
+
+  .mh-more-cases__group {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: var(--space-3);
+    flex-shrink: 0;
+  }
+
+  .mh-more-cases__divider {
+    flex-shrink: 0;
+    align-self: stretch;
+    width: 1px;
+    background: var(--color-border);
+  }
+
+  .mh-more-cases__vlabel {
+    flex-shrink: 0;
+    margin: 0;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-medium);
+    line-height: 1;
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--color-accent);
+    white-space: nowrap;
+  }
+
+  .mh-more-cases__cards {
+    display: flex;
+    flex-direction: row;
+    gap: var(--space-4);
+    flex-shrink: 0;
+  }
+
+  .mh-more-cases__cards :global(.home-case-card) {
+    width: 200px;
+    flex-shrink: 0;
+  }
+</style>

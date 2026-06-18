@@ -15,6 +15,7 @@
   --color-black:         #010101;
   --color-accent:        #E03131;
   --color-accent-hover:  #C92A2A;
+  --color-highlight:     #D4A017;
 
   /* Semantic aliases */
   --color-bg-card:       var(--color-white);
